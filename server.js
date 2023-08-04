@@ -14,10 +14,14 @@ app.engine('html',require('ejs').renderFile);
 app.get('/admin',(req,res)=>{
     controller.admin(req,res);
 })
-app.get('/dashboard',(req,res)=>{
-    res.render('admin.html')
+
+app.post('/login',(req,res)=>{
+    controller.adminLogin(req,res);
 })
 
+app.get('/dashboard',(req,res)=>{
+    res.render('dashboard.html')
+})
 
 app.listen(4000, ()=>{
     console.log('server listening on port 4000')
