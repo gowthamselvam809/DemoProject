@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <!-- Add your custom CSS for the admin page layout -->
+  <style>
+    /* Customize the look and feel here */
+    body {
+      background-color: #f2f2f2;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .admin-info {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .search-bar-container {
+      position: relative;
+    }
+
+    .search-bar {
+      max-width: 300px;
+      padding: 8px 35px 8px 10px;
+      border-radius: 25px;
+      border: none;
+      background-color: #f5f5f5;
+      font-size: 14px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s ease-in-out;
+    }
+
+    .search-bar:focus {
+      background-color: #fff;
+      outline: none;
+    }
+
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      color: #999;
+      cursor: pointer;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .search-icon:hover {
+      color: #555;
+    }
+
+    .tabs-container {
+      background-color: #444;
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .tab-item {
+      cursor: pointer;
+      padding: 10px 20px;
+      font-weight: bold;
+      transition: background 0.3s ease-in-out;
+    }
+
+    .tab-item.active {
+      background-color: #555;
+    }
+
+    .admin-content {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-button {
+      background-color: #FF8C37;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }
+
+    .info-button:hover {
+      background-color: #FFB037;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="header-container">
+      <div class="admin-info">
+        <p>Admin Name: John Doe</p>
+        <p>Phone: 555-1234</p>
+      </div>
+      <div class="search-bar-container">
+        <input type="text" class="search-bar" placeholder="Search...">
+        <i class="search-icon fas fa-search"></i>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="tabs-container">
+          <div class="tab-item active" onclick="showTab('paid')">Paid</div>
+          <div class="tab-item" onclick="showTab('pending')">Pending</div>
+          <div class="tab-item" onclick="showTab('pending Three months')">pending Three months</div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="admin-content" id="paidContent">
+          <h3 class="mb-4">Paid</h3>
+          <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>User Phone</th>
+                <th>User Type</th>
+                <th>Due Date</th>
+                <th>Paid</th>
+                <th>Info</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>JohnDoe</td>
+                <td>555-1234</td>
+                <td>Regular</td>
+                <td>2023-08-15</td>
+                <td>Yes</td>
+                <td><button class="info-button">Info</button></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>JaneSmith</td>
+                <td>555-5678</td>
+                <td>Premium</td>
+                <td>2023-08-20</td>
+                <td>Yes</td>
+                <td><button class="info-button">Info</button></td>
+              </tr>
+              <!-- Add more paid data entries -->
+            </tbody>
+          </table>
+        </div>
+        <!-- Add similar styling for the other tab content sections -->
+        <div class="admin-content d-none" id="pendingContent">
+          <h3 class="mb-4">Pending</h3>
+          <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>User Phone</th>
+                <th>User Type</th>
+                <th>Due Date</th>
+                <th>Paid</th>
+                <th>Info</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>3</td>
+                <td>MaryJohnson</td>
+                <td>555-9876</td>
+                <td>Regular</td>
+                <td>2023-08-10</td>
+                <td>No</td>
+                <td><button class="info-button">Info</button></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>MichaelSmith</td>
+                <td>555-4321</td>
+                <td>Regular</td>
+                <td>2023-08-12</td>
+                <td>No</td>
+                <td><button class="info-button">Info</button></td>
+              </tr>
+              <!-- Add more pending data entries -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and Font Awesome icons -->
+  <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+  <script>
+    function showTab(tabName) {
+      // Hide all tab contents
+      var allContents = document.querySelectorAll('.admin-content');
+      allContents.forEach(function (content) {
+        content.classList.add('d-none');
+      });
+
+      // Show the selected tab content
+      var selectedContent = document.getElementById(tabName + 'Content');
+      selectedContent.classList.remove('d-none');
+
+      // Update active tab styling
+      var allTabs = document.querySelectorAll('.tab-item');
+      allTabs.forEach(function (tab) {
+        tab.classList.remove('active');
+      });
+
+      // Add active class to the clicked tab
+      var clickedTab = document.querySelector('[onclick="showTab(\'' + tabName + '\')"]');
+      clickedTab.classList.add('active');
+    }
+  </script>
+</body>
+</html>

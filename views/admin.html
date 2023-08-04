@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <!-- Add your custom CSS for the admin page layout -->
+  <style>
+    /* Customize the look and feel here */
+    
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="header-container">
+      <div class="admin-info">
+        <p>Admin Name: John Doe</p>
+        <p>Phone: 555-1234</p>
+      </div>
+      <input type="text" class="search-bar" placeholder="Search...">
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="tabs-container">
+          <div class="tab-item active" onclick="showTab('paid')">Paid</div>
+          <div class="tab-item" onclick="showTab('pending')">Pending</div>
+          <div class="tab-item" onclick="showTab('pendingMoreThan3Months')">Pending for more than three months</div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="admin-content" id="paidContent">
+          <h3 class="mb-4">Paid</h3>
+          <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Info</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Replace the following rows with actual paid data -->
+              <tr>
+                <td>John Doe</td>
+                <td>555-1234</td>
+                <td><button class="info-button">Info</button></td>
+              </tr>
+              <tr>
+                <td>Jane Smith</td>
+                <td>555-5678</td>
+                <td><button class="info-button">Info</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Add similar styling for the other two content sections -->
+        <div class="admin-content d-none" id="pendingContent">
+          <!-- Add pending data -->
+        </div>
+        <div class="admin-content d-none" id="pendingMoreThan3MonthsContent">
+          <!-- Add pending for more than three months data -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and any custom JS for tabs -->
+  <script src="../js/admin.js">
+    
+  </script>
+</body>
+</html>

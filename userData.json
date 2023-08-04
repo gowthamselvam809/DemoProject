@@ -1,0 +1,93 @@
+[
+    {
+      "userid": 1,
+      "username": "JohnDoe",
+      "userphone": "1234567890",
+      "userpassword": "123",
+      "usertype": "consumer",
+      "duedate": "2023-07-15",
+      "paid": true
+    },
+    {
+      "userid": 2,
+      "username": "JaneSmith",
+      "userphone": "8248867484",
+      "userpassword": "1234",
+      "usertype": "admin",
+      "duedate": "2023-08-20",
+      "paid": true
+    },
+    {
+      "userid": 3,
+      "username": "MaryJohnson",
+      "userphone": "555-9876",
+      "userpassword": "123",
+      "usertype": "consumer",
+      "duedate": "2023-05-10",
+      "paid": false
+    },
+    {
+      "userid": 4,
+      "username": "MichaelSmith",
+      "userphone": "555-4321",
+      "userpassword": "123",
+      "usertype": "consumer",
+      "duedate": "2023-03-12",
+      "paid": false
+    },
+    {
+      "userid": 5,
+      "username": "EmilyDavis",
+      "userphone": "555-7890",
+      "userpassword": "123",
+      "usertype": "consumer",
+      "duedate": "2023-08-18",
+      "paid": true
+    },
+    {
+      "userid": 6,
+      "username": "WilliamJohnson",
+      "userphone": "555-3456",
+      "userpassword": "123",
+      "usertype": "consumer",
+      "duedate": "2023-08-11",
+      "paid": false
+    },
+    {
+      "userid": 7,
+      "username": "OliviaBrown",
+      "userphone": "555-5678",
+      "userpassword": "123",
+      "usertype": "consumer",
+      "duedate": "2023-07-16",
+      "paid": false
+    },
+    {
+      "userid": 8,
+      "username": "JamesMiller",
+      "userphone": "555-6543",
+      "userpassword": "123",
+      "usertype": "consumer",
+      "duedate": "2023-08-17",
+      "paid": true
+    },
+    {
+      "userid": 9,
+      "username": "SophiaWilson",
+      "userphone": "555-9876",
+      "userpassword": "123",
+      "usertype": "consumer",
+      "duedate": "2023-08-13",
+      "paid": false
+    },
+    {
+      "userid": 10,
+      "username": "BenjaminLee",
+      "userphone": "555-1234",
+      "userpassword": "123",
+      "usertype": "consumer",
+      "duedate": "2023-08-14",
+      "paid": true
+    }
+  ]
+  
