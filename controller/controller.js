@@ -1,6 +1,7 @@
 const helper = require('../helper/helper.js');
 const {uuid} = require('uuidv4');
 
+
 const admin = (req,res)=>{
     res.render('adminLogin.html')
 }
@@ -11,7 +12,7 @@ const adminLogin = (req,res)=>{
 
     const data = {
         select:'*',
-        table : 'user_infos',
+        table : 'user_info',
         condition : `user_phone = "${phone}" && user_password = "${password}"`
     };
 
@@ -66,9 +67,70 @@ const adminLogin = (req,res)=>{
 
 const dashboard = (req,res)=>{
     const session_id = req.query.s;
-    res.render('dashboard.html')
+    const data= {
+        user_select : '*',
+        user_table_name : 'user_info',
+        condition_user : `user_id `,
+        session_select : 'user_id',
+        session_table_name : 'session_info',
+        condition_session : `session_id = "${session_id}"` 
+    }
+    helper.sessionValidation(data, (result)=>{
+        if(result.length == 1){
+            if(result[0].user_type == 'admin'){
+                res.render('dashboard.html')
+            }else{
+                res.render('adminLogin.html');
+            }
+        }else{
+            res.render('adminLogin.html');
+        }
+    })
+    
 }
 
 
+const billDetails = (req,res) =>{
+    const session_id = req.body.session;
+    const data= {
+        user_select : '*',
+        user_table_name : 'user_info',
+        condition_user : `user_id `,
+        session_select : 'user_id',
+        session_table_name : 'session_info',
+        condition_session : `session_id = "${session_id}"` 
+    }
 
-module.exports = {admin,adminLogin,dashboard}
+    helper.sessionValidation(data, (result)=>{
+        if(result.length == 1){
+            const user_id = result[0].user_id;
+            if(result[0].user_type == 'admin'){
+                const user_data = {
+                    select : 'user_name,user_id,user_phone',
+                    table : 'user_info'
+                }
+                helper.fetchData(user_data,(userResult)=>{
+                    const billData = {
+                        select : '*',
+                        table : 'bill_data',
+                    }
+                    helper.fetchData(billData, (billResult)=>{
+                        res.send({
+                            info : billResult,
+                            user : userResult,
+                            admin_id : user_id
+                    });
+                })
+                
+                })
+            }else{
+                res.render('adminLogin.html')
+            }
+        }else{
+            res.render('adminLogin.html')
+        }
+    })
+}
+
+
+module.exports = {admin,adminLogin,dashboard,billDetails}

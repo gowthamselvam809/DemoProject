@@ -9,22 +9,75 @@
   <link rel="stylesheet" href="../css/admin.css">
   <!-- Add your custom CSS for the admin page layout -->
   <style>
-    /* Customize the look and feel here */
-    
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .tabs-container {
+
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+   /* Custom styling for the hamburger icon */
+/* .hamburger-menu {
+  width: 30px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  /* Optional: Add styling to make the icon visually appealing */
+/* } */ 
+
+/* .bar {
+  width: 100%;
+  height: 3px;
+  background-color: black;
+} */
+
+/* Default styling for tabs */
+/* .tabs-container {
+  display: flex;
+} */
+/* 
+.tab-item {
+  padding: 10px 15px;
+  cursor: pointer;
+} */
+
+/* Hide the tabs on mobile devices */
+/* @media screen and (max-width: 767px) {
+  .tabs-container {
+    display: none;
+  } */
+
+  /* Show the tabs when the hamburger menu is clicked */
+  /* .show-tabs .tabs-container {
+    display: flex;
+  }
+} */
+
   </style>
 </head>
-<body>
+<body onload="fetchBillData()">
   <div class="container-fluid">
     <div class="header-container">
       <div class="admin-info">
-        <p>Admin Name: John Doe</p>
-        <p>Phone: 555-1234</p>
+        <table class="table table-striped" id="admin-table">
+        </table>
       </div>
       <input type="text" class="search-bar" placeholder="Search...">
     </div>
-
     <div class="row">
       <div class="col-md-3">
+        <div class="hamburger-menu">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
         <div class="tabs-container">
           <div class="tab-item active" onclick="showTab('paid')">Paid</div>
           <div class="tab-item" onclick="showTab('pending')">Pending</div>
@@ -37,39 +90,75 @@
           <table class="table table-bordered table-hover">
             <thead class="table-dark">
               <tr>
-                <th>Name</th>
-                <th>Phone</th>
+                <th>UserName</th>
+                <th>BillNo.</th>
+                <th>Amount</th>
+                <th>Phone No.</th>
+                <th>Billing Date</th>
+                <th>Payment Date</th>
                 <th>Info</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="paid-user">
               <!-- Replace the following rows with actual paid data -->
-              <tr>
-                <td>John Doe</td>
-                <td>555-1234</td>
-                <td><button class="info-button">Info</button></td>
-              </tr>
-              <tr>
-                <td>Jane Smith</td>
-                <td>555-5678</td>
-                <td><button class="info-button">Info</button></td>
-              </tr>
+              
             </tbody>
           </table>
         </div>
         <!-- Add similar styling for the other two content sections -->
         <div class="admin-content d-none" id="pendingContent">
           <!-- Add pending data -->
+          <h3 class="mb-4">Pending</h3>
+          <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>UserName</th>
+                <th>BillNo.</th>
+                <th>Amount</th>
+                <th>Phone No.</th>
+                <th>Billing Date</th>
+                <th>Due Date</th>
+                <th>Info</th>
+              </tr>
+            </thead>
+            <tbody id="not-paid">
+              <!-- Replace the following rows with actual paid data -->
+            </tbody>
+          </table>
         </div>
         <div class="admin-content d-none" id="pendingMoreThan3MonthsContent">
           <!-- Add pending for more than three months data -->
+          <h3 class="mb-4">Pending for more than three months</h3>
+          <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>UserName</th>
+                <th>BillNo.</th>
+                <th>Amount</th>
+                <th>Phone No.</th>
+                <th>Billing Date</th>
+                <th>Due date</th>
+                <th>Disable</th>
+              </tr>
+            </thead>
+            <tbody id="3-month">
+              <!-- Replace the following rows with actual paid data -->
+              
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
-
   <!-- Bootstrap JS and any custom JS for tabs -->
   <script src="../js/dashboard.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script>
+  $(document).ready(function() {
+  $(".hamburger-menu").on("click", function() {
+    $(".tabs-container").toggleClass("show-tabs");
+  });
+});
+  </script>
 </body>
 </html>

@@ -10,6 +10,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.engine('html',require('ejs').renderFile);
+app.use(express.json())
 
 app.get('/admin',(req,res)=>{
     controller.admin(req,res);
@@ -20,7 +21,11 @@ app.post('/login',(req,res)=>{
 })
 
 app.get('/dashboard',(req,res)=>{
-    res.render('dashboard.html')
+    controller.dashboard(req,res);
+})
+
+app.post('/billDetails',(req,res)=>{
+    controller.billDetails(req,res);
 })
 
 app.listen(4000, ()=>{

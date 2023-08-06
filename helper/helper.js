@@ -4,15 +4,14 @@ var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "admin",
-    database: "trainingdb",
+    database: "electricity",
   });
-
 
   con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
-
 });
+
 
 const selectData = (data, callBack)=>{
     const select = data.select;
@@ -30,6 +29,22 @@ const selectData = (data, callBack)=>{
     })
 }
 
+const fetchData = (data, callBack) =>{
+    const select = data.select;
+    const table = data.table;
+    
+    const query = `SELECT ${select} FROM ${table}`
+
+    con.query(query,(err,result)=>{
+        if(err){
+            throw err;
+        }else{
+            callBack(result);
+        }
+    })
+}
+
+
 const insertData = (data,callBack)=>{
     const table = data.table;
     const columns = data.columns;
@@ -46,5 +61,23 @@ const insertData = (data,callBack)=>{
     })
 }
 
+const sessionValidation = (data,callBack)=>{
+    const user_select = data.user_select;
+    const user_table_name = data.user_table_name;
+    const condition_user = data.condition_user;
+    const session_select = data.session_select;
+    const session_table_name = data.session_table_name;
+    const condition_session = data.condition_session;
 
-module.exports = {selectData,insertData}
+    const getQuery = `SELECT ${user_select} FROM ${user_table_name} WHERE ${condition_user} IN (SELECT ${session_select} FROM ${session_table_name} WHERE ${condition_session})`
+
+    con.query(getQuery,(getErr, getResult)=>{
+        if(getErr){
+            throw getErr;
+        }else{
+            callBack(getResult);
+        }
+    })
+}
+
+module.exports = {selectData,insertData,sessionValidation,fetchData}
