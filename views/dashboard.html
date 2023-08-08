@@ -1,97 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Page</title>
-  <!-- Add Bootstrap CSS link -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/admin.css">
-  <!-- Add your custom CSS for the admin page layout -->
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
+  <head>
+    <title>Sidebar 01</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="../css/fonts.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/datatables.min.css" /> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/datatables.min.css" />
+    <meta name="robots" content="noindex, follow" />
+  </head>
+  <body>
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+        
+        <div class="p-4 pt-5">
+          <a
+            href="#admin"
+            data-toggle="collapse"
+            aria-expanded="false"
+            class="img logo rounded-circle mb-5"
+            style="background-image: url(../images/unkown1.jpg)"
+          ></a>
+          
+          <ul class="collapse list-unstyled" id="admin">
+            
+            <li>
+              <a href="#" class="text-center font-weight-bolder">ADMIN</a>
+            </li>
 
-    .tabs-container {
+            <div class="container" id="adminUser">
+              
+            </div>
+            <!-- <li><hr class="dropdown-divider" /></li> -->
+            <!-- <li><a class="" href="#!">Logout</a></li> -->
 
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
+            <!-- <li> -->
+            <!-- <table class="table align-content-center text-white">
+                    <tr>
+                        <th>Name :</th>
+                        <td>Gowtham</td>
+                    </tr>
+                    <tr>
+                        <th>Phone :</th>
+                        <td>8248867484</td>
+                    </tr>
+                </table> -->
+            <!-- </li> -->
 
-   /* Custom styling for the hamburger icon */
-/* .hamburger-menu {
-  width: 30px;
-  height: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  /* Optional: Add styling to make the icon visually appealing */
-/* } */ 
+            <!-- <li>
+              Admin : Gowtham
+            </li>
+            <li>
+              Phone : 8248867484
+            </li> -->
+            <!-- <li><a href="#"></a></li> -->
+            <li>
+              <a
+                href="#"
+                onclick="logout()"
+                style="color: red"
+                class="font-weight-bold text-center"
+                >Logout</a
+              >
+            </li>
+          </ul>
+          <ul class="list-unstyled components mb-5 tab-bar">
+            
+            <li class="active" id="allBills">
+              <a href="#">All Bills</a>
+              
+            </li>
+            <li>
+              <a href="#" data-toggle="collapse" aria-expanded="false" onclick="showTab('paid')" id="paidBills"
+                >Paid Bills</a
+              >
+            </li>
 
-/* .bar {
-  width: 100%;
-  height: 3px;
-  background-color: black;
-} */
+            <li>
+              <a href="#" onclick="showTab('pending')" id="pendingBills">Pending Bills</a>
+            </li>
+            <li>
+              <a href="#" onclick="showTab('pendingMoreThan3Months')" id="pendingMoreThan3MonthsBills">More Than Three Month Pendings</a>
+            </li>
+          </ul>
 
-/* Default styling for tabs */
-/* .tabs-container {
-  display: flex;
-} */
-/* 
-.tab-item {
-  padding: 10px 15px;
-  cursor: pointer;
-} */
-
-/* Hide the tabs on mobile devices */
-/* @media screen and (max-width: 767px) {
-  .tabs-container {
-    display: none;
-  } */
-
-  /* Show the tabs when the hamburger menu is clicked */
-  /* .show-tabs .tabs-container {
-    display: flex;
-  }
-} */
-
-  </style>
-</head>
-<body onload="fetchBillData()">
-  <div class="container-fluid">
-    <div class="header-container">
-      <div class="admin-info">
-        <table class="table table-striped" id="admin-table">
-        </table>
-      </div>
-      <input type="text" class="search-bar" placeholder="Search...">
-    </div>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="hamburger-menu">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
+          <!-- <ul class="collapse list-unstyled" id="pageSubmenu">
+                <li>
+                  <a href="#">Page 1</a>
+                </li>
+                <li>
+                  <a href="#">Page 2</a>
+                </li>
+                <li>
+                  <a href="#">Page 3</a>
+                </li>
+              </ul> -->
+              
+          <div
+            class="footer fixed-bottom mx-2 font-weight-bolder"
+            margin
+            id="foot-admin"
+          >
+            <!-- <p>
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              All rights reserved | This template is made with
+              <i class="icon-heart" aria-hidden="true"></i> 
+              <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+            </p> -->
+          </div>
         </div>
-        <div class="tabs-container">
-          <div class="tab-item active" onclick="showTab('paid')">Paid</div>
-          <div class="tab-item" onclick="showTab('pending')">Pending</div>
-          <div class="tab-item" onclick="showTab('pendingMoreThan3Months')">Pending for more than three months</div>
-        </div>
-      </div>
-      <div class="col-md-9">
+      </nav>
+
+      <div id="content" class="p-4 p-md-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <button type="button" data-toggle="collapse" id="sidebarCollapse" class="btn btn-primary">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+            <!-- <button
+              class="btn btn-dark d-inline-block d-lg-none ml-auto"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <i class="fa fa-bars"></i>
+            </button> -->
+            <div
+              class="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            ></div>
+          </div>
+        </nav>
+        
+
         <div class="admin-content" id="paidContent">
-          <h3 class="mb-4">Paid</h3>
-          <table class="table table-bordered table-hover">
-            <thead class="table-dark">
+            <h2 class="mb-4">Paid User</h2>
+          <table
+            class="table table-bordered table-responsive-sm"
+            id="datatablesSimple"
+          >
+            <thead>
               <tr>
                 <th>UserName</th>
-                <th>BillNo.</th>
+                <th>User ID</th>
                 <th>Amount</th>
                 <th>Phone No.</th>
                 <th>Billing Date</th>
@@ -100,21 +170,21 @@
               </tr>
             </thead>
             <tbody id="paid-user">
-              <!-- Replace the following rows with actual paid data -->
               
             </tbody>
           </table>
         </div>
-        <!-- Add similar styling for the other two content sections -->
         <div class="admin-content d-none" id="pendingContent">
-          <!-- Add pending data -->
-          <h3 class="mb-4">Pending</h3>
-          <table class="table table-bordered table-hover">
-            <thead class="table-dark">
+            <h2 class="mb-4">Pending User</h2>
+          <table
+            class="table table-bordered table-responsive-sm"
+            id="datatablesSimple1"
+          >
+            <thead>
               <tr>
                 <th>UserName</th>
-                <th>BillNo.</th>
-                <th>Amount</th>
+                <th>User ID</th>
+                <th>Balance Amount</th>
                 <th>Phone No.</th>
                 <th>Billing Date</th>
                 <th>Due Date</th>
@@ -122,43 +192,59 @@
               </tr>
             </thead>
             <tbody id="not-paid">
-              <!-- Replace the following rows with actual paid data -->
+              
             </tbody>
           </table>
         </div>
         <div class="admin-content d-none" id="pendingMoreThan3MonthsContent">
-          <!-- Add pending for more than three months data -->
-          <h3 class="mb-4">Pending for more than three months</h3>
-          <table class="table table-bordered table-hover">
-            <thead class="table-dark">
+            <h2 class="mb-4">Pending More Than Three Months User</h2>
+          <table
+            class="table table-bordered table-responsive-sm"
+            id="datatablesSimple2"
+          >
+            <thead>
               <tr>
                 <th>UserName</th>
-                <th>BillNo.</th>
-                <th>Amount</th>
+                <th>User ID</th>
+                <th>Balance Amount</th>
                 <th>Phone No.</th>
                 <th>Billing Date</th>
-                <th>Due date</th>
+                <th>Due Date</th>
                 <th>Disable</th>
               </tr>
             </thead>
             <tbody id="3-month">
-              <!-- Replace the following rows with actual paid data -->
-              
+
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Bootstrap JS and any custom JS for tabs -->
-  <script src="../js/dashboard.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script>
-  $(document).ready(function() {
-  $(".hamburger-menu").on("click", function() {
-    $(".tabs-container").toggleClass("show-tabs");
-  });
-});
-  </script>
-</body>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/popper.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/datatables.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script> -->
+    <script src="../js/dashboard.js"></script>
+    <!-- <script src="../js/jquery.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <!-- <script src="https://cdn.datatables.net/1.11.10/js/jquery.dataTables.min.js"></script> -->
+    <!-- <script src="../js/popper.js"></script> -->
+    <!-- <script src="../js/bootstrap.min.js"></script> -->
+    <script src="../js/main.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script> -->
+    <!-- <script src="../datatables.min.js"></script> -->
+    <!-- <script src="../js/dashboard.js"></script> -->
+    <!-- <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js/v8b253dfea2ab4077af8c6f58422dfbfd1689876627854"
+      integrity="sha512-bjgnUKX4azu3dLTVtie9u6TKqgx29RBwfj3QXYt5EKfWM/9hPSAI/4qcV5NACjwAo8UtTeWefx6Zq5PHcMm7Tg=="
+      data-cf-beacon='{"rayId":"7f3528373ca73c00","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2023.7.0","si":100}'
+      crossorigin="anonymous"
+    ></script> -->
+  </body>
 </html>

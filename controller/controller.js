@@ -26,7 +26,6 @@ const adminLogin = (req,res)=>{
                     table : 'session_info',
                     condition : `user_id = ${userid}`
                 };
-
                 helper.selectData(data,(session)=>{
                     console.log(session)
                     if(session.length==1){
@@ -44,7 +43,7 @@ const adminLogin = (req,res)=>{
 
                             helper.insertData(data,(insertResult)=>{
                                 if(insertResult){
-                                    res.json({session :sessionId,isAdmin:true,isValid:true})
+                                    res.send({session :sessionId,isAdmin:true,isValid:true})
                                 }else{
                                     res.sendStatus(500);
                                 }
@@ -106,7 +105,7 @@ const billDetails = (req,res) =>{
             const user_id = result[0].user_id;
             if(result[0].user_type == 'admin'){
                 const user_data = {
-                    select : 'user_name,user_id,user_phone',
+                    select : 'user_name,user_id,user_phone,user_address',
                     table : 'user_info'
                 }
                 helper.fetchData(user_data,(userResult)=>{

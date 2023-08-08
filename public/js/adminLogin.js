@@ -74,13 +74,13 @@ function validateForm() {
     phone: phone,
     password: password
   }, (data) => {
-    console.log(data)
+    // console.log(data)
     const invalid = document.getElementById('invalid')
     if (data.isValid) {
       if (!data.isAdmin) {
         invalid.innerText = "Consumer can't login here, Go Back"
       } else {
-        console.log('I am an admin')
+        // console.log('I am an admin')
         const sessionId = data.session;
         sessionStorage.setItem('sid', sessionId);
         window.location.href = `/dashboard?s=${sessionId}`
