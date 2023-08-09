@@ -28,6 +28,10 @@ app.post('/billDetails',(req,res)=>{
     controller.billDetails(req,res);
 })
 
+app.post('/logout',(req,res)=>{
+    controller.logout(req,res);
+})
+
 app.listen(4000, ()=>{
     console.log('server listening on port 4000')
 })

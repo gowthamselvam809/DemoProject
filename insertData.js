@@ -36,10 +36,10 @@ con.connect((err) => {
     let user_id = 1; // Initialize the user_id
 
     for (let user of userData) {
-        const query = 'INSERT INTO user_info SET ?';
+        const query = 'INSERT INTO user_info SET ? ';
 
         const Data = {
-            user_id: user_id,
+            user_id: user.user_id,
             user_password:'123',
             user_name: user.user_name,
             user_address: user.user_address,

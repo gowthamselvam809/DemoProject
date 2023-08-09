@@ -27,7 +27,6 @@ const adminLogin = (req,res)=>{
                     condition : `user_id = ${userid}`
                 };
                 helper.selectData(data,(session)=>{
-                    console.log(session)
                     if(session.length==1){
                         const session_id = session[0].session_id;
                         res.json({session:session_id,isAdmin:true,isValid : true});
@@ -131,5 +130,35 @@ const billDetails = (req,res) =>{
     })
 }
 
+const logout = (req,res)=>{
+    const session_id = req.body.session;
+    const data= {
+        user_select : 'user_id',
+        user_table_name : 'user_info',
+        condition_user : `user_id `,
+        session_select : 'user_id',
+        session_table_name : 'session_info',
+        condition_session : `session_id = "${session_id}"` 
+    }
+    helper.sessionValidation(data, (result)=>{
+        if(result.length == 1){
+            const user_id = result[0].user_id;
+            const delData = {
+                table : 'session_info',
+                condition : `user_id = ${user_id}` 
+            }
+            helper.deleteRowData(delData,(delResult)=>{
+                if(delResult){
+                    res.send(200);
+                }else{
+                    res.render('adminLogin.html')
+                }
+            })
+        }else{
+          res.render('adminLogin.html')
+        }
+    })
+}
 
-module.exports = {admin,adminLogin,dashboard,billDetails}
+
+module.exports = {admin,adminLogin,dashboard,billDetails,logout}

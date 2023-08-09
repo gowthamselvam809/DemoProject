@@ -149,24 +149,6 @@ const inputData = [
         printData(result,data.user, data.admin_id)
     })
 
-    // let dataTableOptions;
-    //     dataTableOptions = {
-    //         searchable: true,
-    //         sortable: true,
-    //         perPage: 10,
-    //         perPageSelect: [5, 10, 20, 50],
-            
-    //     };
-    //     const paidData = [];
-
-    //     for (const user of inputData) {
-      
-    //         paidData.push([  user.user_id, user.bill_generated_date, user.meter_num,user.bill_id,user.amount_due, '<button class="info-button" onClick="userInfo()">Info</button>']);
-    //       }
-
-
-    // const paidTable = $('#paidtable').DataTable(dataTableOptions);
-    // paidTable.clear().rows.add(paidData).draw();
   })
 
   function printData(data, userData, admin_id) {
@@ -372,4 +354,17 @@ const inputData = [
     // Add active class to the clicked tab
     var clickedTab = document.querySelector('[onclick="showTab(\'' + tabName + '\')"]');
     clickedTab.classList.add('active');
+  }
+
+
+  function logout(){
+    const session = sessionStorage.getItem('sid');
+    $.post('/logout',{
+      session : session
+    },
+    (data)=>{
+      if(data){
+        window.location.href = '/admin'
+      }
+    })
   }

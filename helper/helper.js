@@ -80,4 +80,19 @@ const sessionValidation = (data,callBack)=>{
     })
 }
 
-module.exports = {selectData,insertData,sessionValidation,fetchData}
+const deleteRowData = (data, callBack)=>{
+    const table = data.table;
+    const condition = data.condition;
+
+    const delQuery = `DELETE FROM ${table} WHERE ${condition};`
+
+    con.query(delQuery, (err,result)=>{
+        if(err){
+            throw err;
+        }else{
+            callBack(1)
+        }
+    })
+}
+
+module.exports = {selectData,insertData,sessionValidation,fetchData,deleteRowData}
