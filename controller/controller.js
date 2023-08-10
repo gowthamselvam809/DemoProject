@@ -1,7 +1,6 @@
 const helper = require('../helper/helper.js');
 const {uuid} = require('uuidv4');
 
-
 const admin = (req,res)=>{
     res.render('adminLogin.html')
 }
@@ -9,13 +8,11 @@ const admin = (req,res)=>{
 const adminLogin = (req,res)=>{
     const phone = req.body.phone;
     const password = req.body.password;
-
     const data = {
         select:'*',
         table : 'user_info',
         condition : `user_phone = "${phone}" && user_password = "${password}"`
     };
-
     helper.selectData(data,(result)=>{
         if(result.length==1){
             if(result[0].user_type == 'admin'){
@@ -62,7 +59,6 @@ const adminLogin = (req,res)=>{
     })
 }
 
-
 const dashboard = (req,res)=>{
     const session_id = req.query.s;
     const data= {
@@ -84,9 +80,7 @@ const dashboard = (req,res)=>{
             res.render('adminLogin.html');
         }
     })
-    
 }
-
 
 const billDetails = (req,res) =>{
     const session_id = req.body.session;
@@ -117,9 +111,8 @@ const billDetails = (req,res) =>{
                             info : billResult,
                             user : userResult,
                             admin_id : user_id
-                    });
-                })
-                
+                        });
+                    })
                 })
             }else{
                 res.render('adminLogin.html')
@@ -196,8 +189,6 @@ const disableEnable = (req,res) =>{
     })
 }
 
-
-
 const filterData = (req,res)=>{
     const session_id = req.body.session;
     const data= {
@@ -256,7 +247,6 @@ const paymentCount = (req,res)=>{
         session_table_name : 'session_info',
         condition_session : `session_id = "${session_id}"` 
     }
-
     helper.sessionValidation(data, (result)=>{
         if(result.length == 1){
             if(result[0].user_type == 'admin'){
@@ -282,7 +272,6 @@ const saveUsers = (req,res)=>{
     const user_phone = req.body.user_phone;
     const user_address = req.body.user_address;
     const user_id = req.body.user_id;
-
     const saveData = {
         table : 'user_info',
         columns : `user_name="${user_name}",user_phone = ${user_phone},user_address="${user_address}"`,
@@ -295,17 +284,14 @@ const saveUsers = (req,res)=>{
             res.sendStatus(500);
         }
     })
-
 }
 
 const deleteUser =(req,res)=>{
     const user_id = req.body.user_id;
-
     const deleteUserData = {
         table : "user_info",
         condition : `user_id = ${user_id}`
     }
-
     helper.deleteRowData(deleteUserData,(delUserResult)=>{
         if(delUserResult){
             const deleteBillData = {
@@ -325,4 +311,67 @@ const deleteUser =(req,res)=>{
     })
 }
 
-module.exports = {admin,adminLogin,dashboard,billDetails,logout,disableEnable,filterData,paymentCount,saveUsers,deleteUser}
+
+const generateBill = (req,res)=>{
+    const date = req.body.date;
+    const billData = {
+        select : 'user_id',
+        table : 'user_info',
+    }
+    helper.fetchData(billData,(billResult)=>{
+            let year = parseInt(date.slice(0,4));
+            let day = parseInt(date.slice(8,10));
+            let month = parseInt(date.slice(5,7));
+            month = month == 12 ? 1 : month+1;
+            year = month <= 12 ? year : year + 1;
+            let out ;
+            for(let i = 0 ; i < billResult.length ; i++){
+                let billId = ('IN'+ Math.floor(Math.random()*100)+Math.random().toString(36).substr(2, 4)).toUpperCase();
+                let meter = Math.floor(Math.random()*100000000);
+                let consumption=Math.floor(Math.random()*1000);
+                let status = i % 2==0 ? 1 : 0;
+                const data={
+                    bill_id:`${billId}`,
+                    user_id:billResult[i].user_id,
+                    meter_num:meter,
+                    bill_generated_date:`${date}`,
+                    bill_due_date:`${year}-${month}-${day}`,
+                    consumption_units:consumption,
+                    amount_due:calculateElectricityBill(consumption),
+                    paid_status:status,
+                    paid_date:'not paid'
+                }
+            const insertBill = {
+                table : 'bill_data',
+                columns : 'bill_id,user_id,meter_num,bill_generated_date,bill_due_date,amount_due,paid_status,paid_date',
+                values : `'${data.bill_id}',${data.user_id},${data.meter_num},'${data.bill_generated_date}','${data.bill_due_date}',${data.amount_due},${data.paid_status},'${data.paid_date}'`
+            }
+            helper.insertData(insertBill,(insResult)=>{
+
+            });
+        } 
+        res.sendStatus(200);
+    })
+}
+
+
+const calculateElectricityBill = (unitsConsumed =>{
+    if(unitsConsumed<=50){
+         value =unitsConsumed*4.00
+         return value.toFixed(2)
+    }
+    else if(unitsConsumed<=100){
+        value=200+((unitsConsumed-50)*5.25)
+        return value.toFixed(2)
+    }
+    else if ( unitsConsumed<=200){
+        value= (462.5+((unitsConsumed-100)*6.80))
+        return value.toFixed(2)
+    }else {
+         value = 1142.5+(unitsConsumed-200)*7.65
+         return value.toFixed(2)
+    }
+})
+
+
+module.exports = {admin,adminLogin,dashboard,billDetails,logout,disableEnable,filterData,paymentCount,saveUsers,deleteUser,generateBill}

@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------------------------------------
-    let userDetails;
+  let userDetails;
 
   document.addEventListener('DOMContentLoaded', event =>{
     console.log('hi im woriking')
@@ -68,6 +68,29 @@
     pendingBillsData.clear().rows.add(pendingBills).draw();
 
   }
+  //---------------------------------------------------------------------
+
+  function generateBill(){
+    const date = new Date().toISOString().slice(0,10)
+    $.post('/generate',{
+       date : date
+    },(data)=>{
+      const response = confirm("Are you going to Generate Bill?")
+      if(response){
+        if(data){
+          console.log('success')
+          const session = sessionStorage.getItem('sid')
+          window.location.href = `/dashboard?s=${session}`
+        }else{
+          alert("Bills are not Generated.");
+          console.log('Bills is not Generated');
+        }
+      }else{
+        console.log('failed Generate Bills')
+      }
+        
+    })
+}
 
   //------------------------------------------------------------------------------------------------------------------
   function showUserInfoModal(user_id) {
@@ -123,14 +146,16 @@ function saveUser(){
       user_address : user_address
   },
   (data)=>{
+    if(data){
       location.reload();
       const sessionId=sessionStorage.getItem('sid'); 
       window.location.href = `/dashboard?s=${sessionId}`
+    }
+      
   })
 }
 
 function cancelUser(){
-  // location.reload();
   document.getElementById('user_name').disabled = true
   document.getElementById('user_address').disabled = true
   document.getElementById('user_phone').disabled = true
@@ -393,7 +418,6 @@ function deleteUser(){
     const listItems = document.querySelectorAll('.tab-bar li ');
   
     listItems.forEach(item => {
-      console.log(item.id+' ' + clickedId)
       if (item.id === clickedId) {
         item.classList.add('active');
       } else {

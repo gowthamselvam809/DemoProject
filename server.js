@@ -52,6 +52,10 @@ app.post('/deleteUser',(req,res)=>{
     controller.deleteUser(req,res);
 })
 
+app.post('/generate',(req,res)=>{
+    controller.generateBill(req,res);
+})
+
 app.listen(4000, ()=>{
     console.log('server listening on port 4000')
 })

@@ -50,7 +50,6 @@ const insertData = (data,callBack)=>{
     const values = data.values;
 
     const query = `INSERT INTO ${table}(${columns}) VALUES(${values})`;
-
     con.query(query, (err, result)=>{
         if(err){
             throw err;
@@ -99,7 +98,6 @@ const updateData = (data,callBack)=>{
     const columns = data.columns;
     const condition = data.condition;
     const updateQuery = `UPDATE ${table} SET ${columns} WHERE ${condition}`
-    console.log(updateQuery)
     con.query(updateQuery, (err,result)=>{
         if(err){
             throw err;
