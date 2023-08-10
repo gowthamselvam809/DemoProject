@@ -32,6 +32,26 @@ app.post('/logout',(req,res)=>{
     controller.logout(req,res);
 })
 
+app.post('/filterData',(req,res)=>{
+    controller.filterData(req,res);
+})
+
+app.post('/disableEnable',(req,res)=>{
+    controller.disableEnable(req,res);
+})
+
+app.post('/paymentCount',(req,res)=>{
+    controller.paymentCount(req,res);
+})
+
+app.post('/saveUsers',(req,res)=>{
+    controller.saveUsers(req,res);
+})
+
+app.post('/deleteUser',(req,res)=>{
+    controller.deleteUser(req,res);
+})
+
 app.listen(4000, ()=>{
     console.log('server listening on port 4000')
 })

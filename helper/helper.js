@@ -19,7 +19,6 @@ const selectData = (data, callBack)=>{
     const condition = data.condition;
 
     const query = `SELECT ${select} FROM ${table} WHERE ${condition}`
-
     con.query(query,(err,result)=>{
         if(err){
             throw err;
@@ -95,4 +94,20 @@ const deleteRowData = (data, callBack)=>{
     })
 }
 
-module.exports = {selectData,insertData,sessionValidation,fetchData,deleteRowData}
+const updateData = (data,callBack)=>{
+    const table = data.table;
+    const columns = data.columns;
+    const condition = data.condition;
+    const updateQuery = `UPDATE ${table} SET ${columns} WHERE ${condition}`
+    console.log(updateQuery)
+    con.query(updateQuery, (err,result)=>{
+        if(err){
+            throw err;
+        }else{
+            callBack(1);
+        }
+    })
+}
+
+
+module.exports = {selectData,insertData,sessionValidation,fetchData,deleteRowData,updateData}

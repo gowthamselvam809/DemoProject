@@ -1,155 +1,223 @@
-const inputData = [
-    {
-      user_id: 1,
-      bill_id: "INW080CC3",
-      meter_num: 3683502,
-      bill_generated_date: "2021-01-05",
-      bill_due_date: "2021-04-05",
-      consumption_units: 740,
-      amount_due: 500,
-      paid_status: 1,
-      paid_date: "2021-04-01",
-    },
-    {
-      user_id: 1,
-      bill_id: "INW080CC3",
-      meter_num: 3683502,
-      bill_generated_date: "2021-01-05",
-      bill_due_date: "2021-03-05",
-      consumption_units: 740,
-      amount_due: 500,
-      paid_status: 1,
-      paid_date: "2021-03-01",
-    },
-    {
-      user_id: 1,
-      bill_id: "INW080CC3",
-      meter_num: 3683502,
-      bill_generated_date: "2021-01-05",
-      bill_due_date: "2021-02-05",
-      consumption_units: 740,
-      amount_due: 500,
-      paid_status: 0,
-      paid_date: "not paid",
-    },
-    {
-      user_id: 1,
-      bill_id: "INW080CC3",
-      meter_num: 3683502,
-      bill_generated_date: "2021-03-05",
-      bill_due_date: "2021-04-05",
-      consumption_units: 740,
-      amount_due: 500,
-      paid_status: 0,
-      paid_date: "not paid",
-    },
-    {
-      user_id: 2,
-      bill_id: "IN5CTSNWP",
-      meter_num: 3683502,
-      bill_generated_date: "2021-02-05",
-      bill_due_date: "2021-06-05",
-      consumption_units: 853,
-      amount_due: 100,
-      paid_status: 0,
-      paid_date: "not paid",
-    },
-    {
-      user_id: 2,
-      bill_id: "IN5CTSNWP",
-      meter_num: 3683502,
-      bill_generated_date: "2021-02-05",
-      bill_due_date: "2021-05-05",
-      consumption_units: 853,
-      amount_due: 100,
-      paid_status: 0,
-      paid_date: "not paid",
-    },
-    {
-      user_id: 2,
-      bill_id: "IN5CTSNWP",
-      meter_num: 3683502,
-      bill_generated_date: "2021-02-05",
-      bill_due_date: "2021-05-05",
-      consumption_units: 853,
-      amount_due: 100,
-      paid_status: 0,
-      paid_date: "not paid",
-    },
-    {
-      user_id: 3,
-      bill_id: "INQ5AS5VW",
-      meter_num: 3683502,
-      bill_generated_date: "2022-02-05",
-      bill_due_date: "2022-05-05",
-      consumption_units: 885,
-      amount_due: 100,
-      paid_status: 0,
-      paid_date: "not paid",
-    },
-    {
-      user_id: 3,
-      bill_id: "INQ5AS5VW",
-      meter_num: 3683502,
-      bill_generated_date: "2022-02-05",
-      bill_due_date: "2022-05-05",
-      consumption_units: 885,
-      amount_due: 6770.25,
-      paid_status: 1,
-      paid_date: "2022-05-10",
-    },
-    {
-      user_id: 4,
-      bill_id: "IN4B36BQ7",
-      meter_num: 3683502,
-      bill_generated_date: "2022-03-05",
-      bill_due_date: "2022-06-05",
-      consumption_units: 719,
-      amount_due: 5500.35,
-      paid_status: 0,
-      paid_date: "not paid",
-    },
-    {
-      user_id: 5,
-      bill_id: "INJ26S4W3",
-      meter_num: 3683502,
-      bill_generated_date: "2022-04-05",
-      bill_due_date: "2022-07-05",
-      consumption_units: 383,
-      amount_due: 2929.95,
-      paid_status: 1,
-      paid_date: "2022-07-05",
-    },
-    {
-      user_id: 6,
-      bill_id: "IN8ONBVH7",
-      meter_num: 51106093,
-      bill_generated_date: "2022-10-05",
-      bill_due_date: "2023-01-05",
-      consumption_units: 452,
-      amount_due: 3457.8,
-      paid_status: 1,
-      paid_date: "2023-01-05",
-    },
-    // Add more sample data as needed
-  ];
 
 //---------------------------------------------------------------------------------------------------
-  
+    let userDetails;
+
   document.addEventListener('DOMContentLoaded', event =>{
     console.log('hi im woriking')
     const session = sessionStorage.getItem('sid')
 
-    $.post('/billDetails',
-    {
-        session : session
-    },
-    (data)=>{
-        const result = separateData(data.info);
-        printData(result,data.user, data.admin_id)
+
+    $.post('/filterData',{
+      session : session
+    },(data)=>{
+      printBills(data.allBills,data.paidBills,data.pendingBills);
     })
 
+    $.post('/paymentCount',{
+      session : session
+    },(data)=>{
+      userData(data.userResult,data.adminId)
+      userDetails = data.userResult;
+    })
+
+    // $.post('/billDetails',
+    // {
+    //     session : session
+    // },
+    // (data)=>{
+    //     const result = separateData(data.info);
+    //     printData(result,data.user, data.admin_id)
+    // })
+
   })
+
+  //-------------------------------------------------------------------------------------------------------------------------------
+
+  function printBills(all, paid, pending){
+
+    const dataTableOptions = {
+      searchable: true,
+      sortable: true,
+      perPage: 10,
+      perPageSelect: [5, 10, 20, 50],
+    };
+
+    const allBills = [];
+    const paidBills = [];
+    const pendingBills = [];
+
+    for(let bills of all){
+      allBills.push([bills.user_name,bills.user_id,bills.meter_num,bills.bill_id,bills.amount_due,bills.bill_generated_date,bills.bill_due_date,bills.paid_date])
+    }
+
+    for(let bills of paid){
+      paidBills.push([bills.user_name, bills.user_id, bills.meter_num, bills.bill_id, bills.amount_due, bills.bill_generated_date, bills.paid_date])
+    }
+
+    for(let bills of pending){
+      pendingBills.push([bills.user_name, bills.user_id, bills.meter_num, bills.bill_id, bills.amount_due, bills.bill_generated_date, bills.bill_due_date])
+    }
+
+    const allBillsData = $('#datatablesSimpleBill').DataTable(dataTableOptions);
+    allBillsData.clear().rows.add(allBills).draw();
+  
+    const paidBillsData = $('#datatablesSimpleBill1').DataTable(dataTableOptions);
+    paidBillsData.clear().rows.add(paidBills).draw();
+  
+    const pendingBillsData = $('#datatablesSimpleBill2').DataTable(dataTableOptions);
+    pendingBillsData.clear().rows.add(pendingBills).draw();
+
+  }
+
+  //------------------------------------------------------------------------------------------------------------------
+  function showUserInfoModal(user_id) {
+
+    for(let user of userDetails){
+      if(user.user_id == user_id){
+        const details = `<tr>
+        <th><label for="name">Name</label></th>
+        <td><input type="text" name="" id="user_name" value="${user.user_name}" disabled></td>
+    </tr>
+    <tr>
+        <th><label for="name">User ID</label></th>
+        <td><input type="text" name="" id="user_id" value="${user.user_id}" disabled></td>
+    </tr>
+    <tr>
+        <th><label for="name">Phone</label></th>
+        <td><input type="tel" name="" id="user_phone" value="${user.user_phone}" disabled></td>
+    </tr>
+    <tr>
+        <th><label for="name">Address</label></th>
+        <td><textarea name="user_address" id="user_address" cols="25" rows="3" disabled>${user.user_address}</textarea></td>
+    </tr>`;
+
+    document.getElementById('userDetailsModal').innerHTML = details;
+      }
+    }
+    // Show the modal
+    $('#userModal').modal('show');
+}
+
+
+
+
+function editUser(){
+  document.getElementById('user_name').removeAttribute('disabled')
+  document.getElementById('user_phone').removeAttribute('disabled')
+  document.getElementById('user_address').removeAttribute('disabled')
+  document.getElementById('after').style.display = 'inline-block'
+  document.getElementById('before').style.display = 'none'
+  
+}
+
+function saveUser(){
+  const user_name = document.getElementById('user_name').value
+  const user_phone =document.getElementById('user_phone').value
+  const user_address =document.getElementById('user_address').value
+  const user_id =document.getElementById('user_id').value
+
+  $.post('/saveUsers',{
+      user_name : user_name,
+      user_id : user_id,
+      user_phone : user_phone,
+      user_address : user_address
+  },
+  (data)=>{
+      location.reload();
+      const sessionId=sessionStorage.getItem('sid'); 
+      window.location.href = `/dashboard?s=${sessionId}`
+  })
+}
+
+function cancelUser(){
+  // location.reload();
+  document.getElementById('user_name').disabled = true
+  document.getElementById('user_address').disabled = true
+  document.getElementById('user_phone').disabled = true
+  document.getElementById('after').style.display = 'none'
+  document.getElementById('before').style.display = 'inline-block'
+}
+
+function deleteUser(){
+  const user_id = document.getElementById('user_id').value;
+  const response = confirm("Do you really want to delete?")
+  if(response){
+      $.post('/deleteUser',{
+          user_id : user_id
+      },
+      (data)=>{
+          console.log(data)
+          const sessionId = sessionStorage.getItem('sid');
+          window.location=`/dashboard?s=${sessionId}`
+      })
+  }else{
+      location.reload();
+  }
+ 
+}
+  //------------------------------------------------------------------------------------------------------------------------------------------------
+
+  function userData(data,admin_id){
+
+    const admin = document.getElementById('adminUser');
+    const fadmin = document.getElementById('foot-admin');
+        
+    let paidTable, notPaidTable, moreThan3Table,allUserTable;
+
+    const dataTableOptions = {
+      searchable: true,
+      sortable: true,
+      perPage: 10,
+      perPageSelect: [5, 10, 20, 50],
+    };
+    const allUser = [];
+    const paidData = [];
+    const notPaidData = [];
+    const moreThan3Data = [];
+
+  
+    for (const user of data) {
+
+
+      allUser.push([user.user_name, user.user_id, user.user_phone, user.user_type, user.pending, '<button type="button" class="btn btn-info" onclick="showUserInfoModal('+user.user_id+')">Info</button>']);
+
+      if (user.user_id == admin_id) {
+        admin.innerHTML = '<li><a class="" href="#!">Name : '+user.user_name+'</a></li><li><a class="" href="#!">Phone : '+user.user_phone+'</a></li>';
+        fadmin.innerHTML = '<div class="small">Logged In as  </div>' + user.user_name + '';
+      }
+
+      if(user.pending == 0){
+        paidData.push([user.user_name, user.user_id, user.user_phone, user.user_type, user.pending ]);
+        
+      }else if(user.pending < 3){
+        notPaidData.push([user.user_name, user.user_id, user.user_phone, user.user_type,user.pending ]);
+      }else{
+        let buttonHtml = '';
+        if (user.block_status) {
+          buttonHtml = '<button class="btn btn-success success" data-user-id="' + user.user_id + '">Enable</button>';
+        } else {
+          buttonHtml = '<button class="btn btn-danger danger" data-user-id="' + user.user_id + '">Disable</button>';
+        }
+        moreThan3Data.push([user.user_name, user.user_id, user.user_phone, user.user_type, user.pending, buttonHtml]);
+  
+      }
+    }
+    allUserTable = $('#datatablesSimpleall').DataTable(dataTableOptions);
+    allUserTable.clear().rows.add(allUser).draw();
+
+    paidTable = $('#datatablesSimple').DataTable(dataTableOptions);
+    paidTable.clear().rows.add(paidData).draw();
+  
+     notPaidTable = $('#datatablesSimple1').DataTable(dataTableOptions);
+    notPaidTable.clear().rows.add(notPaidData).draw();
+  
+     moreThan3Table = $('#datatablesSimple2').DataTable(dataTableOptions);
+    moreThan3Table.clear().rows.add(moreThan3Data).draw();
+
+  }
+
+
+  //---------------------------------------------NOT USING THIS-------------------------------------------------------------------------
 
   function printData(data, userData, admin_id) {
     const admin = document.getElementById('adminUser');
@@ -206,7 +274,15 @@ const inputData = [
           break;
         }
       }
-      moreThan3Data.push([users.user_name,users.user_id, user.totalBalance, users.user_phone, user.bill_generated_date, user.dueDate, '<button class="info-button" style="background-color:red;">Disable</button>']);
+
+      let buttonHtml = '';
+      if (users.block_status) {
+        buttonHtml = '<button class="btn btn-success" data-user-id="' + user.user_id + '">Enable</button>';
+      } else {
+        buttonHtml = '<button class="btn btn-danger" data-user-id="' + user.user_id + '">Disable</button>';
+      }
+
+      moreThan3Data.push([users.user_name,users.user_id, user.totalBalance, users.user_phone, user.bill_generated_date, user.dueDate, buttonHtml]);
     }
   
     paidTable = $('#datatablesSimple').DataTable(dataTableOptions);
@@ -221,7 +297,7 @@ const inputData = [
   }
 
 
-  //==============================================================================
+  //==================================================NOT USING THIS============================
 
   function separateData(inputData) {
     const groupedData = {};
@@ -313,12 +389,11 @@ const inputData = [
   //--------------------------------------------------------------------------------------------
 
 
-
-
   function setActiveListItem(clickedId) {
-    const listItems = document.querySelectorAll('.tab-bar li');
+    const listItems = document.querySelectorAll('.tab-bar li ');
   
     listItems.forEach(item => {
+      console.log(item.id+' ' + clickedId)
       if (item.id === clickedId) {
         item.classList.add('active');
       } else {
@@ -327,17 +402,13 @@ const inputData = [
     });
   }
 
-  //-----------------------------------------------------------------------------------------------------------------------------
-
   function showTab(tabName) {
-
+    console.log(tabName+'Bills')
     setActiveListItem(tabName + 'Bills');   
     // Hide all tab contents
     var allContents = document.querySelectorAll('.admin-content');
     allContents.forEach(function (content) {
       content.classList.add('d-none');
-      
-     
     });
 
     // Show the selected tab content
@@ -356,6 +427,7 @@ const inputData = [
     clickedTab.classList.add('active');
   }
 
+  //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   function logout(){
     const session = sessionStorage.getItem('sid');
@@ -368,3 +440,44 @@ const inputData = [
       }
     })
   }
+
+  //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  $(document).on('click', '.danger', function() {
+    
+    const button = $(this);
+    const userId = button.data('user-id');
+    console.log(userId)
+    const session = sessionStorage.getItem('sid')
+    $.post('/disableEnable',{
+      user_id :userId,
+      session : session,
+      status : 1
+    },(data)=>{
+      if(data){
+        console.log(data)
+        console.log("Disabled UserId : " + userId)
+      }
+    })
+    
+    button.removeClass('btn-danger danger').addClass('btn-success success').text('Enable');
+  });
+  
+  $(document).on('click', '.success', function() {
+    const button = $(this);
+    const userId = button.data('user-id');
+    const session = sessionStorage.getItem('sid')
+    $.post('/disableEnable',{
+      user_id :userId,
+      session : session,
+      status : 0
+    },(data)=>{
+      if(data){
+        console.log(data)
+        console.log("Enabled UserId : " + userId)
+      }
+    })
+    button.removeClass('btn-success success').addClass('btn-danger danger').text('Disable');
+  });
+  
+  
