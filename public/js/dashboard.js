@@ -122,7 +122,11 @@
 }
 
 
-
+function closeButton(){
+  
+  document.getElementById('after').style.display = 'none'
+  document.getElementById('before').style.display = 'inline-block'
+}
 
 function editUser(){
   document.getElementById('user_name').removeAttribute('disabled')
@@ -161,6 +165,7 @@ function cancelUser(){
   document.getElementById('user_phone').disabled = true
   document.getElementById('after').style.display = 'none'
   document.getElementById('before').style.display = 'inline-block'
+  // location.reload()
 }
 
 function deleteUser(){
