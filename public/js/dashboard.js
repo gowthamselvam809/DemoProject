@@ -47,15 +47,15 @@
     const pendingBills = [];
 
     for(let bills of all){
-      allBills.push([bills.user_name,bills.user_id,bills.meter_num,bills.bill_id,bills.amount_due,bills.bill_generated_date,bills.bill_due_date,bills.paid_date])
+      allBills.push([bills.user_name,bills.user_id,bills.meter_num,bills.bill_id,bills.amount_due,bills.consumption_units,bills.bill_generated_date,bills.bill_due_date,bills.paid_date])
     }
 
     for(let bills of paid){
-      paidBills.push([bills.user_name, bills.user_id, bills.meter_num, bills.bill_id, bills.amount_due, bills.bill_generated_date, bills.paid_date])
+      paidBills.push([bills.user_name, bills.user_id, bills.meter_num, bills.bill_id, bills.amount_due,bills.consumption_units, bills.bill_generated_date, bills.paid_date])
     }
 
     for(let bills of pending){
-      pendingBills.push([bills.user_name, bills.user_id, bills.meter_num, bills.bill_id, bills.amount_due, bills.bill_generated_date, bills.bill_due_date])
+      pendingBills.push([bills.user_name, bills.user_id, bills.meter_num, bills.bill_id, bills.amount_due,bills.consumption_units, bills.bill_generated_date, bills.bill_due_date])
     }
 
     const allBillsData = $('#datatablesSimpleBill').DataTable(dataTableOptions);
@@ -439,7 +439,6 @@ function deleteUser(){
     var selectedContent = document.getElementById(tabName + 'Content');
     selectedContent.classList.remove('d-none');
     
-
     // Update active tab styling
     var allTabs = document.querySelectorAll('.tab-item');
     allTabs.forEach(function (tab) {

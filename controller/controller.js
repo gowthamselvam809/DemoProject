@@ -343,8 +343,8 @@ const generateBill = (req,res)=>{
                 }
             const insertBill = {
                 table : 'bill_data',
-                columns : 'bill_id,user_id,meter_num,bill_generated_date,bill_due_date,amount_due,paid_status,paid_date',
-                values : `'${data.bill_id}',${data.user_id},${data.meter_num},'${data.bill_generated_date}','${data.bill_due_date}',${data.amount_due},${data.paid_status},'${data.paid_date}'`
+                columns : 'bill_id,user_id,meter_num,bill_generated_date,consumption_units,bill_due_date,amount_due,paid_status,paid_date',
+                values : `'${data.bill_id}',${data.user_id},${data.meter_num},'${data.bill_generated_date}',${data.consumption_units},'${data.bill_due_date}',${data.amount_due},${data.paid_status},'${data.paid_date}'`
             }
             helper.insertData(insertBill,(insResult)=>{
 
